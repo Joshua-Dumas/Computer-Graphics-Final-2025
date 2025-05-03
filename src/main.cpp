@@ -42,6 +42,10 @@ int main(int argc, char* argv[])
 #endif
 {
     Canis::Init();
+
+    // Seed the random number generator once
+    srand((unsigned int)time(NULL));
+
     Canis::InputManager inputManager;
     Canis::FrameRateManager frameRateManager;
     frameRateManager.Init(60);
@@ -92,16 +96,25 @@ int main(int argc, char* argv[])
     /// END OF SHADER
 
     /// Load Image
-    Canis::GLTexture glassTexture = Canis::LoadImageGL("assets/textures/glass.png", true);
+
+    // all plant textures used
     Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", true);
+    Canis::GLTexture blue_orchidTexture = Canis::LoadImageGL("assets/textures/blue_orchid.png", true);
+    Canis::GLTexture poppyTexture = Canis::LoadImageGL("assets/textures/poppy.png", true);
+    Canis::GLTexture azure_bluetTexture = Canis::LoadImageGL("assets/textures/azure_bluet.png", true);
+    Canis::GLTexture dandelionTexture = Canis::LoadImageGL("assets/textures/dandelion.png", true);
+    Canis::GLTexture cornflowerTexture = Canis::LoadImageGL("assets/textures/cornflower.png", true);
+
+    // all block textures used
+    Canis::GLTexture glassTexture = Canis::LoadImageGL("assets/textures/glass.png", true);
     Canis::GLTexture brickTexture = Canis::LoadImageGL("assets/textures/bricks.png", true);
     Canis::GLTexture dirtTexture = Canis::LoadImageGL("assets/textures/dirt.png", true);
     Canis::GLTexture cobblestoneTexture = Canis::LoadImageGL("assets/textures/cobblestone.png", false);
     Canis::GLTexture grass_block_topTexture = Canis::LoadImageGL("assets/textures/grass_block_top.png", false);
-    Canis::GLTexture oak_plank_floorTexture = Canis::LoadImageGL("assets/textures/oak_planks_floor.png", false);
+    Canis::GLTexture oak_plank_floorTexture = Canis::LoadImageGL("assets/textures/oak_planks_floor.png", true);
     Canis::GLTexture oak_logTexture = Canis::LoadImageGL("assets/textures/oak_log.png", false);
     Canis::GLTexture oak_planksTexture = Canis::LoadImageGL("assets/textures/oak_planks.png", false);
-    Canis::GLTexture netherrackTexture = Canis::LoadImageGL("assets/textures/netherrack.png", false);
+    Canis::GLTexture netherrackTexture = Canis::LoadImageGL("assets/textures/netherrack.png", true);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
 
@@ -135,8 +148,46 @@ int main(int argc, char* argv[])
                     world.Spawn(entity);
                     break;
                 case 2: // places grass 
-                    entity.tag = "grass";
-                    entity.albedo = &grassTexture;
+                {
+                    int r = rand() % 100; // 0 - 99
+                    if (r < 50){ // 50% chance to place nothing
+                        break;
+                    }
+
+                    int plantChance = rand() % 100;
+                    if (plantChance < 75){ // 75% of the 50% chance to place a plant will place grass
+                        entity.tag = "grass";
+                        entity.albedo = &grassTexture;
+                    }
+                    else{ // 25% of the 50% chance to place a plant will place 1 of the 5 plant textures
+                    // plants are blue orchid, poppy, azure bullet, cornflower, and dandelion
+                        int flowerIndex = rand() % 5;
+                        switch (flowerIndex){
+                            case 0:
+                                entity.tag = "blue orchid";
+                                entity.albedo = &blue_orchidTexture;
+                                break;
+                            case 1:
+                                entity.tag = "poppy";
+                                entity.albedo = &poppyTexture;
+                                break;
+                            case 2:
+                                entity.tag = "azure bullet";
+                                entity.albedo = &azure_bluetTexture;
+                                break;
+                            case 3:
+                                entity.tag = "cornflower";
+                                entity.albedo = &cornflowerTexture;
+                                break;
+                            case 4:
+                                entity.tag = "dandelion";
+                                entity.albedo = &dandelionTexture;
+                                break;
+                        }
+                    }
+
+                    
+
                     entity.specular = &textureSpecular;
                     entity.model = &grassModel;
                     entity.shader = &grassShader;
@@ -144,6 +195,7 @@ int main(int argc, char* argv[])
                     entity.Update = &Rotate;
                     world.Spawn(entity);
                     break;
+                }  
                 case 3: // places a brick block
                     entity.tag = "brick";
                     entity.albedo = &brickTexture;
