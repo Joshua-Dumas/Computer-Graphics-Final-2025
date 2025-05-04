@@ -382,6 +382,7 @@ void LoadMap(std::string _path)
 void SpawnLights(Canis::World &_world)
 {
     Canis::DirectionalLight directionalLight;
+    directionalLight.ambient = vec3(0.2f, 0.2f, 0.2f);
     _world.SpawnDirectionalLight(directionalLight);
 
     Canis::PointLight pointLight;
@@ -395,18 +396,17 @@ void SpawnLights(Canis::World &_world)
 
     _world.SpawnPointLight(pointLight);
 
-    pointLight.position = vec3(19.0f, 10.0f, 9.0f);
+    // left side of house
+    pointLight.position = vec3(5.0f, 6.0f, 4.0f);
+    _world.SpawnPointLight(pointLight);
+
+    // right side of house
+    pointLight.position = vec3(5.0f, 6.0f, 14.0f);
+    _world.SpawnPointLight(pointLight);
+
+    pointLight.position = vec3(19.0f, -100.0f, 9.0f);
     pointLight.ambient = vec3(1.0f, 1.0f, 1.0f);
 
     _world.SpawnPointLight(pointLight);
-
-    pointLight.position = vec3(-2.0f);
-    pointLight.ambient = vec3(0.0f, 1.0f, 0.0f);
-
-    _world.SpawnPointLight(pointLight);
-
-    pointLight.position = vec3(2.0f);
-    pointLight.ambient = vec3(0.0f, 0.0f, 1.0f);
-
-    _world.SpawnPointLight(pointLight);
+   
 }
