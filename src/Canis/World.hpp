@@ -18,7 +18,7 @@ namespace Canis
         void Spawn(Entity _entity);
         void SpawnPointLight(PointLight _light);
         void SpawnDirectionalLight(DirectionalLight _light);
-        void UpdateFireTexture(int index); // Declare a method to update the fire texture by index
+        void UpdateFireTexture(int index); // method to update the fire texture by index
         Camera& GetCamera() { return m_camera; }
         Entity* GetEntity(unsigned int _index) { return &m_entities[_index]; }
         std::vector<Entity>& GetEntities() { return m_entities; }

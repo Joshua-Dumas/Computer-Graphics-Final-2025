@@ -105,22 +105,22 @@ int main(int argc, char* argv[])
     /// Load Image
 
     // all plant textures used
-    Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", true);
-    Canis::GLTexture blue_orchidTexture = Canis::LoadImageGL("assets/textures/blue_orchid.png", true);
-    Canis::GLTexture poppyTexture = Canis::LoadImageGL("assets/textures/poppy.png", true);
-    Canis::GLTexture azure_bluetTexture = Canis::LoadImageGL("assets/textures/azure_bluet.png", true);
-    Canis::GLTexture dandelionTexture = Canis::LoadImageGL("assets/textures/dandelion.png", true);
-    Canis::GLTexture cornflowerTexture = Canis::LoadImageGL("assets/textures/cornflower.png", true);
+    Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", false);
+    Canis::GLTexture blue_orchidTexture = Canis::LoadImageGL("assets/textures/blue_orchid.png", false);
+    Canis::GLTexture poppyTexture = Canis::LoadImageGL("assets/textures/poppy.png", false);
+    Canis::GLTexture azure_bluetTexture = Canis::LoadImageGL("assets/textures/azure_bluet.png", false);
+    Canis::GLTexture dandelionTexture = Canis::LoadImageGL("assets/textures/dandelion.png", false);
+    Canis::GLTexture cornflowerTexture = Canis::LoadImageGL("assets/textures/cornflower.png", false);
 
     // all block textures used
     Canis::GLTexture glassTexture = Canis::LoadImageGL("assets/textures/glass.png", true);
     Canis::GLTexture brickTexture = Canis::LoadImageGL("assets/textures/bricks.png", true);
     Canis::GLTexture dirtTexture = Canis::LoadImageGL("assets/textures/dirt.png", true);
-    Canis::GLTexture cobblestoneTexture = Canis::LoadImageGL("assets/textures/cobblestone.png", false);
-    Canis::GLTexture grass_block_topTexture = Canis::LoadImageGL("assets/textures/grass_block_top.png", false);
+    Canis::GLTexture cobblestoneTexture = Canis::LoadImageGL("assets/textures/cobblestone.png", true);
+    Canis::GLTexture grass_block_topTexture = Canis::LoadImageGL("assets/textures/grass_block_top.png", true);
     Canis::GLTexture oak_plank_floorTexture = Canis::LoadImageGL("assets/textures/oak_planks_floor.png", true);
-    Canis::GLTexture oak_logTexture = Canis::LoadImageGL("assets/textures/oak_log.png", false);
-    Canis::GLTexture oak_planksTexture = Canis::LoadImageGL("assets/textures/oak_planks.png", false);
+    Canis::GLTexture oak_logTexture = Canis::LoadImageGL("assets/textures/oak_log.png", true);
+    Canis::GLTexture oak_planksTexture = Canis::LoadImageGL("assets/textures/oak_planks.png", true);
     Canis::GLTexture netherrackTexture = Canis::LoadImageGL("assets/textures/netherrack.png", true);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
@@ -395,18 +395,18 @@ void SpawnLights(Canis::World &_world)
 
     _world.SpawnPointLight(pointLight);
 
-    pointLight.position = vec3(0.0f, 0.0f, 1.0f);
-    pointLight.ambient = vec3(2.0f, 0.0f, 0.0f);
+    pointLight.position = vec3(19.0f, 10.0f, 9.0f);
+    pointLight.ambient = vec3(1.0f, 1.0f, 1.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(-2.0f);
-    pointLight.ambient = vec3(0.0f, 2.0f, 0.0f);
+    pointLight.ambient = vec3(0.0f, 1.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(2.0f);
-    pointLight.ambient = vec3(0.0f, 0.0f, 2.0f);
+    pointLight.ambient = vec3(0.0f, 0.0f, 1.0f);
 
     _world.SpawnPointLight(pointLight);
 }

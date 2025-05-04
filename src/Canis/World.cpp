@@ -197,7 +197,8 @@ namespace Canis
     // Updates the textures of the fire entity based on the current index
     void World::UpdateFireTexture(int index)
     {
-        Entity* fire = GetEntityWithTag("fire"); // Make sure this tag is set in main.cpp
+        // finds the entity tagged "fire"
+        Entity* fire = GetEntityWithTag("fire"); 
         if (fire != nullptr) {
             std::string path = "assets/textures/fire_textures/fire_" + std::to_string(index) + ".png";
             fire->albedo = new Canis::GLTexture(Canis::LoadImageGL(path.c_str(), true));
