@@ -495,10 +495,11 @@ void SpawnLights(Canis::World &_world)
     // right side of house
     pointLight.position = vec3(5.0f, 6.0f, 14.0f);
     _world.SpawnPointLight(pointLight);
-
-    pointLight.position = vec3(19.0f, -100.0f, 9.0f);
-    pointLight.ambient = vec3(1.0f, 1.0f, 1.0f);
-
-    _world.SpawnPointLight(pointLight);
    
+    // light for fireplace
+    pointLight.position = vec3(15.0f, 4.5f, 9.0f); // slightly higer than the position of the fire
+    pointLight.ambient = vec3(0.3f, 0.1f, 0.0f);
+    pointLight.diffuse = vec3(0.8f, 0.4f, 0.1f);
+    pointLight.specular = vec3(1.0f, 0.5f, 0.2f);
+    _world.SpawnPointLight(pointLight);
 }

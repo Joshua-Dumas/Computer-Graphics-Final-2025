@@ -193,6 +193,17 @@ namespace Canis
 
         if (m_inputManager->JustPressedKey(SDLK_ESCAPE))
             m_window->MouseLock(!m_window->GetMouseLock());
+
+        // applies the flicker to the fireplace
+        for (auto& light : m_pointLights) {
+            if (glm::distance(light.position, glm::vec3(15.0f, 4.5f, 9.0f)) < 0.1f) { //position of the light on the fireplace
+                float time = SDL_GetTicks() / 1000.0f;
+                float flicker = 0.8f + 0.2f * sin(time * 10.0f + light.position.x);
+                light.diffuse = glm::vec3(0.8f, 0.4f, 0.1f) * flicker;
+                light.ambient = glm::vec3(0.3f, 0.1f, 0.0f) * (0.5f + 0.5f * flicker);
+            }
+        }
+            
     }
     // Updates the textures of the fire entity based on the current index
     void World::UpdateFireTexture(int index)
