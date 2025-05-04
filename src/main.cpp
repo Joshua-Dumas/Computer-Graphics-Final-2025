@@ -22,6 +22,13 @@
 
 using namespace glm;
 
+// number of fire textures (for frames)
+int fire_frames = 31;
+// tracks how much time has passed since the last texture change
+float fireElapsedTime = 0.0f;
+// Index of the current fire texture
+int fireTextureIndex = 1;
+
 // git restore .
 // git fetch
 // git pull
@@ -121,7 +128,15 @@ int main(int argc, char* argv[])
     /// Load Models
     Canis::Model cubeModel = Canis::LoadModel("assets/models/cube.obj");
     Canis::Model grassModel = Canis::LoadModel("assets/models/plants.obj");
+    //load fire model
+    Canis::Model fireModel = Canis::LoadModel("assets/models/fire.obj");
     /// END OF LOADING MODEL
+    
+    // loads all 31 fire textures 
+    std::vector<Canis::GLTexture> fireTextures;
+    for (int i = 1; i <= fire_frames; i++) {
+        fireTextures.push_back(Canis::LoadImageGL("assets/textures/fire_textures/fire_" + std::to_string(i) + ".png", true));
+    }
 
     // Load Map into 3d array
     LoadMap("assets/maps/level.map");
@@ -185,9 +200,6 @@ int main(int argc, char* argv[])
                                 break;
                         }
                     }
-
-                    
-
                     entity.specular = &textureSpecular;
                     entity.model = &grassModel;
                     entity.shader = &grassShader;
@@ -268,6 +280,15 @@ int main(int argc, char* argv[])
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
+                case 11: // places fire
+                    entity.tag = "fire";
+                    entity.albedo = &fireTextures[0]; // start with the first frame
+                    entity.specular = &textureSpecular;
+                    entity.model = &fireModel;
+                    entity.shader = &shader;
+                    entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                    world.Spawn(entity);
+                    break;
                 default:
                     break;
                 }
@@ -285,6 +306,22 @@ int main(int argc, char* argv[])
         Canis::Graphics::ClearBuffer(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT);
 
         world.Update(deltaTime);
+        
+        // Update the elapsed time
+        fireElapsedTime += deltaTime;
+
+        // if 0.5 seconds have passed then switch to the next fire texture
+        if (fireElapsedTime >= 0.5f)
+        {
+            // resets timer
+            fireElapsedTime = 0.0f;
+            // moves texture index back to 1 after 31
+            fireTextureIndex++;
+            if (fireTextureIndex > 31)
+                fireTextureIndex = 1;
+            // goes to nexxt fire texture
+            world.UpdateFireTexture(fireTextureIndex);
+        }
         world.Draw(deltaTime);
 
         editor.Draw();
@@ -359,17 +396,17 @@ void SpawnLights(Canis::World &_world)
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(0.0f, 0.0f, 1.0f);
-    pointLight.ambient = vec3(4.0f, 0.0f, 0.0f);
+    pointLight.ambient = vec3(2.0f, 0.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(-2.0f);
-    pointLight.ambient = vec3(0.0f, 4.0f, 0.0f);
+    pointLight.ambient = vec3(0.0f, 2.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(2.0f);
-    pointLight.ambient = vec3(0.0f, 0.0f, 4.0f);
+    pointLight.ambient = vec3(0.0f, 0.0f, 2.0f);
 
     _world.SpawnPointLight(pointLight);
 }

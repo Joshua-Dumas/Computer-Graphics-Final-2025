@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
 using namespace glm;
 
 namespace Canis
@@ -193,4 +194,14 @@ namespace Canis
         if (m_inputManager->JustPressedKey(SDLK_ESCAPE))
             m_window->MouseLock(!m_window->GetMouseLock());
     }
+    // Updates the textures of the fire entity based on the current index
+    void World::UpdateFireTexture(int index)
+    {
+        Entity* fire = GetEntityWithTag("fire"); // Make sure this tag is set in main.cpp
+        if (fire != nullptr) {
+            std::string path = "assets/textures/fire_textures/fire_" + std::to_string(index) + ".png";
+            fire->albedo = new Canis::GLTexture(Canis::LoadImageGL(path.c_str(), true));
+        }
+    }
+
 }
