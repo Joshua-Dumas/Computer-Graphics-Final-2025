@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
     Canis::Graphics::EnableDepthTest();
 
     /// SETUP SHADER
+    // added shader for each texture
     Canis::Shader shader;
     shader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
     shader.AddAttribute("aPosition");
@@ -88,6 +89,83 @@ int main(int argc, char* argv[])
     shader.SetFloat("MATERIAL.shininess", 64);
     shader.SetBool("WIND", false);
     shader.UnUse();
+
+    Canis::Shader brickShader;
+    brickShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    brickShader.AddAttribute("aPosition");
+    brickShader.Link();
+    brickShader.Use();
+    brickShader.SetInt("MATERIAL.diffuse", 0);
+    brickShader.SetInt("MATERIAL.specular", 1);
+    brickShader.SetFloat("MATERIAL.shininess", 32);
+    brickShader.SetBool("WIND", false);
+    brickShader.UnUse();
+
+    Canis::Shader dirtShader;
+    dirtShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    dirtShader.AddAttribute("aPosition");
+    dirtShader.Link();
+    dirtShader.Use();
+    dirtShader.SetInt("MATERIAL.diffuse", 0);
+    dirtShader.SetInt("MATERIAL.specular", 1);
+    dirtShader.SetFloat("MATERIAL.shininess", 32);
+    dirtShader.SetBool("WIND", false);
+    dirtShader.UnUse();
+
+    Canis::Shader cobblestoneShader;
+    cobblestoneShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    cobblestoneShader.AddAttribute("aPosition");
+    cobblestoneShader.Link();
+    cobblestoneShader.Use();
+    cobblestoneShader.SetInt("MATERIAL.diffuse", 0);
+    cobblestoneShader.SetInt("MATERIAL.specular", 1);
+    cobblestoneShader.SetFloat("MATERIAL.shininess", 64);
+    cobblestoneShader.SetBool("WIND", false);
+    cobblestoneShader.UnUse();
+
+    Canis::Shader grassblockShader;
+    grassblockShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    grassblockShader.AddAttribute("aPosition");
+    grassblockShader.Link();
+    grassblockShader.Use();
+    grassblockShader.SetInt("MATERIAL.diffuse", 0);
+    grassblockShader.SetInt("MATERIAL.specular", 1);
+    grassblockShader.SetFloat("MATERIAL.shininess", 32);
+    grassblockShader.SetBool("WIND", false);
+    grassblockShader.UnUse();
+
+    Canis::Shader oakplankShader;
+    oakplankShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    oakplankShader.AddAttribute("aPosition");
+    oakplankShader.Link();
+    oakplankShader.Use();
+    oakplankShader.SetInt("MATERIAL.diffuse", 0);
+    oakplankShader.SetInt("MATERIAL.specular", 1);
+    oakplankShader.SetFloat("MATERIAL.shininess", 64);
+    oakplankShader.SetBool("WIND", false);
+    oakplankShader.UnUse();
+
+    Canis::Shader oaklogShader;
+    oaklogShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    oaklogShader.AddAttribute("aPosition");
+    oaklogShader.Link();
+    oaklogShader.Use();
+    oaklogShader.SetInt("MATERIAL.diffuse", 0);
+    oaklogShader.SetInt("MATERIAL.specular", 1);
+    oaklogShader.SetFloat("MATERIAL.shininess", 32);
+    oaklogShader.SetBool("WIND", false);
+    oaklogShader.UnUse();
+
+    Canis::Shader netherrackShader;
+    netherrackShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    netherrackShader.AddAttribute("aPosition");
+    netherrackShader.Link();
+    netherrackShader.Use();
+    netherrackShader.SetInt("MATERIAL.diffuse", 0);
+    netherrackShader.SetInt("MATERIAL.specular", 1);
+    netherrackShader.SetFloat("MATERIAL.shininess", 64);
+    netherrackShader.SetBool("WIND", false);
+    netherrackShader.UnUse();
 
     Canis::Shader grassShader;
     grassShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
@@ -100,6 +178,20 @@ int main(int argc, char* argv[])
     grassShader.SetBool("WIND", true);
     grassShader.SetFloat("WINDEFFECT", 0.2);
     grassShader.UnUse();
+
+    Canis::Shader flowerShader;
+    flowerShader.Compile("assets/shaders/hello_shader.vs", "assets/shaders/hello_shader.fs");
+    flowerShader.AddAttribute("aPosition");
+    flowerShader.Link();
+    flowerShader.Use();
+    flowerShader.SetInt("MATERIAL.diffuse", 0);
+    flowerShader.SetInt("MATERIAL.specular", 1);
+    flowerShader.SetFloat("MATERIAL.shininess", 64);
+    flowerShader.SetBool("WIND", true);
+    flowerShader.SetFloat("WINDEFFECT", 0.2);
+    flowerShader.UnUse();
+
+
     /// END OF SHADER
 
     /// Load Image
@@ -202,7 +294,7 @@ int main(int argc, char* argv[])
                     }
                     entity.specular = &textureSpecular;
                     entity.model = &grassModel;
-                    entity.shader = &grassShader;
+                    entity.shader = &flowerShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     entity.Update = &Rotate;
                     world.Spawn(entity);
@@ -213,7 +305,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &brickTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &brickShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -222,7 +314,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &dirtTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &dirtShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -231,7 +323,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &cobblestoneTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &cobblestoneShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -240,7 +332,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &grass_block_topTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &grassblockShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -249,7 +341,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &oak_plank_floorTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &oakplankShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -258,7 +350,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &oak_logTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &oaklogShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -267,7 +359,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &oak_planksTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &oakplankShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
@@ -276,7 +368,7 @@ int main(int argc, char* argv[])
                     entity.albedo = &netherrackTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
-                    entity.shader = &shader;
+                    entity.shader = &netherrackShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
