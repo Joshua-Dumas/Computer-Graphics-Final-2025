@@ -403,7 +403,7 @@ int main(int argc, char* argv[])
         fireElapsedTime += deltaTime;
 
         // if 0.5 seconds have passed then switch to the next fire texture
-        if (fireElapsedTime >= 0.5f)
+        if (fireElapsedTime >= 0.2f)
         {
             // resets timer
             fireElapsedTime = 0.0f;
